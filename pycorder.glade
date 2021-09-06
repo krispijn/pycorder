@@ -234,6 +234,7 @@
                     <attributes>
                       <attribute name="scale" value="4"/>
                     </attributes>
+                    <signal name="draw" handler="on_lblTimeRecording_draw" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>

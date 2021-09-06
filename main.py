@@ -21,14 +21,24 @@ class Handler:
             recorder.stop()
             win.get_style_context().remove_class("recording")
             builder.get_object("lblRecBtn").set_text("REC")
+            builder.get_object("iconRecBtn").set_from_gicon(Gio.ThemedIcon(name="gtk-media-record"), Gtk.IconSize.LARGE_TOOLBAR)
         else:
             # is not recording, so start a new one
             recorder.start()
             win.get_style_context().add_class("recording")
             builder.get_object("lblRecBtn").set_text("Stop")
+            builder.get_object("iconRecBtn").set_from_gicon(Gio.ThemedIcon(name="gtk-media-stop"), Gtk.IconSize.LARGE_TOOLBAR)
 
     def on_lblDiskSpace_draw(self, label, event):
         updateDiskSpace()
+
+    def on_lblTimeRecording_draw(self, label, event):
+        updateRecordingTime()
+
+def updateRecordingTime():
+    builder.get_object("lblTimeRecording").set_text(str(recorder.recordingTime).split('.', 2)[0])
+    while Gtk.events_pending():
+        Gtk.main_iteration()
 
 def updateDiskSpace():
     label = builder.get_object("lblDiskSpace")

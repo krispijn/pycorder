@@ -8,7 +8,9 @@ The goal of this application is to have an audio recorder with an extremely simp
 is launched. The intented use case is to be able to have a recording running as soon as you power up your studio. This way performances are always captured 
 and you don't have to worry whether a recorder is running or not.
 
-The output of the recorder will be a datetime named .wav recording and, if the "Mark" button was pressed at least once, a text file with timestaps.
+The recorder will output:
+1. a datetime-named .wav recording and, 
+2. a text file with timestamps, if the "Mark" button was pressed at least once.
 
 ## Workflow
 The application should work as follows:
