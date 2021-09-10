@@ -2,11 +2,12 @@
 import shutil
 import gi
 
-from recorder import Recorder
-
 gi.require_version("Gtk", "3.0")
+
 from gi.repository import Gtk, Gio, Gdk
+from recorder import Recorder
 from config import Config
+
 
 class Handler:
     def onDestroy(self, *args):
@@ -21,26 +22,30 @@ class Handler:
             recorder.stop()
             win.get_style_context().remove_class("recording")
             builder.get_object("lblRecBtn").set_text("REC")
-            builder.get_object("iconRecBtn").set_from_gicon(Gio.ThemedIcon(name="gtk-media-record"), Gtk.IconSize.LARGE_TOOLBAR)
+            builder.get_object("iconRecBtn").set_from_gicon(Gio.ThemedIcon(name="gtk-media-record"),
+                                                            Gtk.IconSize.LARGE_TOOLBAR)
         else:
             # is not recording, so start a new one
             recorder.start()
             win.get_style_context().add_class("recording")
             builder.get_object("lblRecBtn").set_text("Stop")
-            builder.get_object("iconRecBtn").set_from_gicon(Gio.ThemedIcon(name="gtk-media-stop"), Gtk.IconSize.LARGE_TOOLBAR)
+            builder.get_object("iconRecBtn").set_from_gicon(Gio.ThemedIcon(name="gtk-media-stop"),
+                                                            Gtk.IconSize.LARGE_TOOLBAR)
 
     def on_lblDiskSpace_draw(self, label, event):
-        updateDiskSpace()
+        update_disk_space()
 
     def on_lblTimeRecording_draw(self, label, event):
-        updateRecordingTime()
+        update_recording_time()
 
-def updateRecordingTime():
+
+def update_recording_time():
     builder.get_object("lblTimeRecording").set_text(str(recorder.recordingTime).split('.', 2)[0])
     while Gtk.events_pending():
         Gtk.main_iteration()
 
-def updateDiskSpace():
+
+def update_disk_space():
     label = builder.get_object("lblDiskSpace")
     icon = builder.get_object("iconDiskSpace")
     if label is not None:
@@ -58,12 +63,13 @@ def updateDiskSpace():
         while Gtk.events_pending():
             Gtk.main_iteration()
 
+
 if __name__ == '__main__':
     global conf
     global recorder
 
     conf = Config()
-    recorder= Recorder(conf)
+    recorder = Recorder(conf)
 
     builder = Gtk.Builder()
     builder.add_from_file("pycorder.glade")
